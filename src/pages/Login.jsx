@@ -8,10 +8,9 @@ import { FaUserAlt } from "react-icons/fa";
 import "../styles/pages/login.css";
 
 function Login() {
-  const [loading, setLoading] = useState(true);
   const SignupSchema = Yup.object().shape({
     username: Yup.string().email("نام کاربری را به فرم ایمیل وارد کنید").required("این فلید اجباری است"),
-    password: Yup.string().required("این فلید اجباری است"),
+    password: Yup.string().min(8, "تعداد کاراکتر ها باید بیشتر از 8 تا باشد").required("این فلید اجباری است"),
   });
 
   const formik = useFormik({
@@ -22,23 +21,13 @@ function Login() {
     validationSchema: SignupSchema,
     onSubmit: (values, { resetForm }) => {
       console.log(values);
-      setLoading(false);
       setTimeout(() => {
-        setLoading(false);
         resetForm();
       }, 1000 * 2);
     },
-    onChange: (value) => console.log("change "),
-    validateOnChange: () => console.log("validateOnChange"),
-    onkeyup: () => console.log('keyup')
   });
 
-  useEffect(() => {
-    formik.errors.username || formik.errors.password ? setLoading(false) : setLoading(true);
-    console.log(loading);
-    // console.log(formik.errors.username);
-    // console.log(formik.errors.password);
-  }, [loading]);
+  useEffect(() => {}, [formik.values]);
 
   return (
     <form onSubmit={formik.handleSubmit} className="form-group">
@@ -63,7 +52,7 @@ function Login() {
         inputValue={formik.values.password}
         helperText={formik.errors.password ? formik.errors.password : ""}
       />
-      <Button disabled={loading} type={"submit"}>
+      <Button disabled={!(!!formik.values.username & !!formik.values.password)} type={"submit"}>
         Login
       </Button>
     </form>
