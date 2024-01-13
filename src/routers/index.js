@@ -2,7 +2,8 @@ import { renderRoutes } from "./generate-routes";
 
 // Layouts
 import AnonymousLayout from "../layouts/AnonymousLayout";
-import WallImagesLayout from '../layouts/WallImagesLayout'
+import WallImagesLayout from "../layouts/WallImagesLayout";
+import ReportsLayout from "../layouts/ReportsLayout";
 
 // Pages
 import Login from "../pages/Login";
@@ -10,6 +11,7 @@ import Contact from "../pages/Contact";
 import AboutUs from "../pages/AboutUs";
 import NotFound from "../pages/NotFound";
 import MonitoringPage from "../pages/MonitoringPage";
+import ReportsPage from "../pages/Reports";
 
 /* -------------------------------------------------------------------------- */
 /*                                    Types                                   */
@@ -57,6 +59,18 @@ export const routes = [
         title: "Monitoring page",
         component: MonitoringPage,
         path: "/ImageWall",
+        isPublic: true,
+      },
+    ],
+  },
+  {
+    layout: ReportsLayout,
+    routes: [
+      {
+        name: "ReportingPage",
+        title: "Reporting Page",
+        component: ReportsPage,
+        path: "/reports",
         isPublic: true,
       },
     ],
