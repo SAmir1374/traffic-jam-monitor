@@ -5,8 +5,9 @@ import Divider from "@mui/material/Divider";
 import ChartBox from "../components/ui/ChartBox";
 import LineChart from "../components/complix/LineChart";
 import BarChart from "../components/complix/BarChart";
-import "../styles/pages/report.css";
 import Table from "../components/complix/Table";
+import DatePicker from "../components/ui/DatePicker";
+import "../styles/pages/report.css";
 
 const data = [
   { name: "Page A", uv: 4000, pv: 2400 },
@@ -19,11 +20,16 @@ const data = [
 function Reports() {
   return (
     <div>
-      <div className="title">
-        <Divider orientation="vertical" variant="middle" flexItem className="divider" />
-        <h3>خلاصه آمار یک ماه اخیر</h3>
-      </div>
       <Grid container spacing={2} className="myGrid">
+        <Grid item xs={12} md={12} className="myGridTitle">
+          <div className="title">
+            <Divider orientation="vertical" variant="middle" flexItem className="divider" />
+            <h3>خلاصه آمار یک ماه اخیر</h3>
+          </div>
+          <div className="title">
+            <DatePicker />
+          </div>
+        </Grid>
         <Grid item xs={6} md={6} lg={3}>
           <MyBox title="بیشترین درصد کارایی" colorNumber="green" number="63%" />
         </Grid>
