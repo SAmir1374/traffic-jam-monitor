@@ -11,12 +11,12 @@ import "../styles/layouts/ReportsLayout.css";
 function ReportsLayout() {
   return (
     <BackGroundImg src={chartImg}>
-      <GlassCover>
-        <Navigation />
+      <GlassCover className={'glassCoverReportsLayout'}>
+        <Navigation className={'navitationReportsLayout'} />
         <Container>
           <Outlet />
         </Container>
-        <Footer />
+        <Footer className={'footerReportsLayout'}/>
       </GlassCover>
     </BackGroundImg>
   );

@@ -1,0 +1,29 @@
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 12px;
+  color: #fff;
+}
+
+.divider {
+  width: 2px;
+  background-color: #fff;
+}
+
+.mychart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff !important;
+}
+
+.test {
+  height: 250px !important;
+  min-width: 250px !important;
+  color: #fff !important;
+}
+
+.yAxis {
+  padding: 50px !important;
+}

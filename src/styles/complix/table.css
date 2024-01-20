@@ -1,0 +1,11 @@
+.myTableLTR {
+  background-color: transparent !important;
+}
+
+.myTable {
+  color: #fff !important;
+}
+
+.myTable thead {
+  background-color: red !important;
+}
