@@ -9,7 +9,7 @@ function ModalButton({ id, src, temperature, wet, location, date }) {
   const handleClose = () => setIsOpen(false);
 
   return (
-    <div style={{ cursor: "pointer" }}>
+    <div style={{ cursor: "pointer" , width: "fit-content" }}>
       <Modal
         isOpen={isOpen}
         buttonChild={

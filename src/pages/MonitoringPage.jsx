@@ -1,6 +1,5 @@
 import React from "react";
-import MonitoringItem from "../components/complix/MonitoringItem";
-import Grid from "../components/ui/Grid";
+import Grid from '@mui/material/Grid';
 import img from "../components/images/20230604-093500.jpg";
 import ModalButton from "../components/ui/ModalButton";
 
@@ -89,7 +88,7 @@ const defualtItem = [
 
 function MonitoringPage() {
   return (
-    <Grid>
+    <Grid container justifyContent={'center'} >
       {defualtItem.map(({ id, src, temperature, wet, location, date }) => (
         <ModalButton
           key={id}

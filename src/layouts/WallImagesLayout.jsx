@@ -9,7 +9,7 @@ import "../styles/layouts/wallImagesLayout.css";
 
 const NavItems = [
   { id: 1, title: "خانه", link: "/ImageWall" },
-  { id: 2, title: "گزارش ها", link: "/" },
+  { id: 2, title: "گزارش ها", link: "/reports" },
   { id: 3, title: "ارتباط با ما", link: "/ContactUs" },
   { id: 4, title: "خروج", link: "/" },
 ];
@@ -19,7 +19,7 @@ function WallImagesLayout() {
     <BackGroundImg>
       <GlassCover className={"glassCoverWallImageLayout"}>
         <Navigation className={"navitationWallImageLayout"} items={NavItems} />
-        <Container>
+        <Container className={"containerWallImageLayout"}>
           <Outlet />
         </Container>
         <Footer className={"footerWallImageLayout"} />
