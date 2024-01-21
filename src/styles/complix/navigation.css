@@ -3,6 +3,7 @@
   top: 0;
   margin: 0;
   padding: 12px 0;
+  transition: transform 0.3s ease-in-out;
 }
 
 .nav .navContainer {
@@ -29,4 +30,12 @@
 .nav ul li a {
   text-decoration: none;
   color: #fff;
+}
+
+.visible {
+  transform: translateY(0);
+}
+
+.hidden {
+  transform: translateY(-100%);
 }
