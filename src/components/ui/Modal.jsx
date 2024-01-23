@@ -22,10 +22,7 @@ function MyModal({ children, buttonChild = "click me", isOpen }) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  useEffect(() => {
-    console.log("isOpen is => ", isOpen);
-    console.log("Open is => ", open);
-  }, [open]);
+  useEffect(() => {}, [open]);
 
   return (
     <div>

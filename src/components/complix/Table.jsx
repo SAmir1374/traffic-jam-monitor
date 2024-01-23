@@ -8,17 +8,19 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import MuiRTL from "../ui/MuiRTL";
 import MuiTheme from "../ui/MuiTheme";
+import { Link } from "react-router-dom";
+import "../../styles/complix/table.css";
 
-function createData(name, calories) {
-  return { name, calories };
+function createData(id, name, calories) {
+  return {id , name, calories };
 }
 
 const rows = [
-  createData("Frozen yoghurt", 159),
-  createData("Ice cream sandwich", 237),
-  createData("Eclair", 262),
-  createData("Cupcake", 305),
-  createData("Gingerbread", 356),
+  createData(1, "Frozen yoghurt", 159),
+  createData(2, "Ice cream sandwich", 237),
+  createData(3, "Eclair", 262),
+  createData(4, "Cupcake", 305),
+  createData(5, "Gingerbread", 356),
 ];
 
 function MyTable() {
@@ -38,11 +40,17 @@ function MyTable() {
             </TableHead>
             <TableBody>
               {rows.map((row) => (
-                <TableRow key={row.name} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                <TableRow key={row.id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                   <TableCell component="th" scope="col">
-                    {row.name}
+                    <Link className="myLink" to={`/reports/${row.id}`}>
+                      {row.name}
+                    </Link>
                   </TableCell>
-                  <TableCell>{row.calories}</TableCell>
+                  <TableCell>
+                    <Link className="myLink" to={`/reports/${row.id}`}>
+                      {row.calories}
+                    </Link>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

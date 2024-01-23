@@ -12,6 +12,7 @@ import AboutUs from "../pages/AboutUs";
 import NotFound from "../pages/NotFound";
 import MonitoringPage from "../pages/MonitoringPage";
 import ReportsPage from "../pages/Reports";
+import ReportPage from "../pages/Report";
 
 /* -------------------------------------------------------------------------- */
 /*                                    Types                                   */
@@ -71,6 +72,13 @@ export const routes = [
         title: "Reporting Page",
         component: ReportsPage,
         path: "/reports",
+        isPublic: true,
+      },
+      {
+        name: "ReportingPage",
+        title: "Reporting Page",
+        component: ReportPage,
+        path: "/reports/*",
         isPublic: true,
       },
     ],
