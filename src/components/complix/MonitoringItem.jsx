@@ -15,14 +15,11 @@ function MonitoringItem({ className, src, temperature = "20", wet = "19.8", loca
       <GlassCover className={`glassCover`}>
         <div className="secsor-group">
           <Sencor icon={<TiBatteryCharge />} />
-          <Sencor icon={<LiaTemperatureHighSolid />} lable={"20 c"} />
-          <Sencor icon={<GiWaterDrop />} lable={"19.8"} />
+          <Sencor icon={<LiaTemperatureHighSolid />} lable={`${temperature}`} />
+          <Sencor icon={<GiWaterDrop />} lable={wet} />
         </div>
         <div className="description-group">
-          <Descreption
-            desc={" کنارگذر شرق اصفهان - تقاطع اصفهان به نایین "}
-            date={" تاریخ: ۱۴۰۲/۳/۱۴   ساعت: 11:06 "}
-          />
+          <Descreption desc={location} date={date} />
         </div>
       </GlassCover>
     </div>

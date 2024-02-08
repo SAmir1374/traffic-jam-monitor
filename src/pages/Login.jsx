@@ -5,9 +5,19 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { FaUserAlt } from "react-icons/fa";
+import { AuthLogin } from "../apis/Auth/Login";
+import store from "../redux/store";
+import { setAccessToken, updateAccessToken } from "../redux/slice/authSlice";
+import { json, useNavigate } from "react-router-dom";
 import "../styles/pages/login.css";
+import { Monitoring } from "../apis/ImageWall/monitoring";
+import { setImgWall } from "../redux/slice/imgWall";
 
 function Login() {
+  const navigate = useNavigate();
+  const { mutate, isLoading, isSuccess, data } = AuthLogin();
+  const myMonitoringData = Monitoring();
+
   const SignupSchema = Yup.object().shape({
     username: Yup.string().email("نام کاربری را به فرم ایمیل وارد کنید").required("این فلید اجباری است"),
     password: Yup.string().min(8, "تعداد کاراکتر ها باید بیشتر از 8 تا باشد").required("این فلید اجباری است"),
@@ -15,19 +25,30 @@ function Login() {
 
   const formik = useFormik({
     initialValues: {
-      username: "",
-      password: "",
+      username: localStorage.getItem("remeber_Me")
+        ? JSON.parse(localStorage.getItem("remeber_Me")).username
+        : "",
+      password: localStorage.getItem("remeber_Me")
+        ? JSON.parse(localStorage.getItem("remeber_Me")).password
+        : "",
     },
     validationSchema: SignupSchema,
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
+      localStorage.setItem("remeber_Me", JSON.stringify(values));
+      mutate({ Email: values.username, Password: values.password, RememberMe: true });
       setTimeout(() => {
         resetForm();
       }, 1000 * 2);
     },
   });
 
-  useEffect(() => {}, [formik.values]);
+  useEffect(() => {
+    if (isSuccess) {
+      store.dispatch(setAccessToken(data?.token));
+      store.dispatch(setImgWall(myMonitoringData.data));
+      navigate("/ImageWall");
+    }
+  }, [formik.values, isSuccess]);
 
   return (
     <form onSubmit={formik.handleSubmit} className="form-group">

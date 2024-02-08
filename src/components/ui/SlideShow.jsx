@@ -5,30 +5,17 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import "../../styles/ui/slideShow.css";
-import img1 from "../images/20230604-093500.jpg";
-import img2 from "../images/avator.png";
-import img3 from "../images/defualtmonitoring.jpg";
+import store from "../../redux/store";
 
-const defaultImage = [
-  { id: 1, src: img1 },
-  { id: 2, src: img2 },
-  { id: 3, src: img3 },
-  { id: 4, src: img1 },
-  { id: 5, src: img2 },
-  { id: 6, src: img3 },
-];
-
-function SlideShow({ images = defaultImage, initImg = "3", ...props }) {
+function SlideShow({ initImg = "3", index, ...props }) {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
-  useEffect(() => {
-    console.log(thumbsSwiper);
-  }, [thumbsSwiper]);
+  useEffect(() => {}, [thumbsSwiper, initImg]);
 
   return (
     <>
       <Swiper
-        initialSlide={initImg}
+        initialSlide={index}
         loop={true}
         navigation={true}
         modules={[Navigation, Thumbs]}
@@ -36,9 +23,9 @@ function SlideShow({ images = defaultImage, initImg = "3", ...props }) {
         thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
         className="product-image-slider"
       >
-        {images.map(({ id, src }) => (
+        {store.getState().imgWall.imgWall.map(({ id, imageUrl }) => (
           <SwiperSlide key={id}>
-            <img src={src} alt="Slide Images" />
+            <img src={imageUrl} alt="Slide Images" />
           </SwiperSlide>
         ))}
       </Swiper>
@@ -52,10 +39,10 @@ function SlideShow({ images = defaultImage, initImg = "3", ...props }) {
         onSwiper={setThumbsSwiper}
         className="product-image-slider-thumbs"
       >
-        {images.map(({ id, src }) => (
+        {store.getState().imgWall.imgWall.map(({ id, imageUrl }) => (
           <SwiperSlide key={id}>
             <div className="product-image-slider-thumbs-wrapper">
-              <img src={src} alt="Slide Images" />
+              <img src={imageUrl} alt="Slide Images" />
             </div>
           </SwiperSlide>
         ))}

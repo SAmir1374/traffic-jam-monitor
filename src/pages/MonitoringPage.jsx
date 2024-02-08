@@ -1,105 +1,29 @@
-import React from "react";
-import Grid from '@mui/material/Grid';
-import img from "../components/images/20230604-093500.jpg";
+import React, { useEffect } from "react";
+import Grid from "@mui/material/Grid";
 import ModalButton from "../components/ui/ModalButton";
-
-const defualtItem = [
-  {
-    id: 1,
-    src: img,
-    temperature: "20 C",
-    wet: "19.8",
-    location: "کنارگذر شرق اصفهان - تقاطع اصفهان به نایین",
-    date: "تاریخ: ۱۴۰۲/۳/۱۴   ساعت: 11:06 ",
-  },
-  {
-    id: 2,
-    src: "",
-    temperature: "20 C",
-    wet: "19.8",
-    location: "کنارگذر شرق اصفهان - تقاطع اصفهان به نایین",
-    date: "تاریخ: ۱۴۰۲/۳/۱۴   ساعت: 11:06 ",
-  },
-  {
-    id: 3,
-    src: img,
-    temperature: "20 C",
-    wet: "19.8",
-    location: "کنارگذر شرق اصفهان - تقاطع اصفهان به نایین",
-    date: "تاریخ: ۱۴۰۲/۳/۱۴   ساعت: 11:06 ",
-  },
-  {
-    id: 4,
-    src: "",
-    temperature: "20 C",
-    wet: "19.8",
-    location: "کنارگذر شرق اصفهان - تقاطع اصفهان به نایین",
-    date: "تاریخ: ۱۴۰۲/۳/۱۴   ساعت: 11:06 ",
-  },
-  {
-    id: 5,
-    src: "",
-    temperature: "20 C",
-    wet: "19.8",
-    location: "کنارگذر شرق اصفهان - تقاطع اصفهان به نایین",
-    date: "تاریخ: ۱۴۰۲/۳/۱۴   ساعت: 11:06 ",
-  },
-  {
-    id: 6,
-    src: "",
-    temperature: "20 C",
-    wet: "19.8",
-    location: "کنارگذر شرق اصفهان - تقاطع اصفهان به نایین",
-    date: "تاریخ: ۱۴۰۲/۳/۱۴   ساعت: 11:06 ",
-  },
-  {
-    id: 7,
-    src: "",
-    temperature: "20 C",
-    wet: "19.8",
-    location: "کنارگذر شرق اصفهان - تقاطع اصفهان به نایین",
-    date: "تاریخ: ۱۴۰۲/۳/۱۴   ساعت: 11:06 ",
-  },
-  {
-    id: 8,
-    src: "",
-    temperature: "20 C",
-    wet: "19.8",
-    location: "کنارگذر شرق اصفهان - تقاطع اصفهان به نایین",
-    date: "تاریخ: ۱۴۰۲/۳/۱۴   ساعت: 11:06 ",
-  },
-  {
-    id: 9,
-    src: "",
-    temperature: "20 C",
-    wet: "19.8",
-    location: "کنارگذر شرق اصفهان - تقاطع اصفهان به نایین",
-    date: "تاریخ: ۱۴۰۲/۳/۱۴   ساعت: 11:06 ",
-  },
-  {
-    id: 10,
-    src: "",
-    temperature: "20 C",
-    wet: "19.8",
-    location: "کنارگذر شرق اصفهان - تقاطع اصفهان به نایین",
-    date: "تاریخ: ۱۴۰۲/۳/۱۴   ساعت: 11:06 ",
-  },
-];
+import store from "../redux/store";
 
 function MonitoringPage() {
+  useEffect(() => {
+    console.log("store.getState is => ", store.getState().imgWall.imgWall);
+  }, [store.getState().imgWall.imgWall]);
+
   return (
-    <Grid container justifyContent={'center'} >
-      {defualtItem.map(({ id, src, temperature, wet, location, date }) => (
-        <ModalButton
-          key={id}
-          id={id}
-          src={src}
-          temperature={temperature}
-          wet={wet}
-          location={location}
-          date={date}
-        />
-      ))}
+    <Grid container justifyContent={"center"}>
+      {store
+        .getState()
+        .imgWall.imgWall?.map(({ id, imageUrl, temperature, humidity, imageName, imageDateTime }, index) => (
+          <ModalButton
+            key={id}
+            id={id}
+            index={index}
+            src={imageUrl}
+            temperature={temperature}
+            wet={humidity}
+            location={imageName}
+            date={imageDateTime}
+          />
+        ))}
     </Grid>
   );
 }
