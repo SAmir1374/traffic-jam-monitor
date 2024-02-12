@@ -1,17 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const defaultItems = [
-  { id: 1, title: "ورود", link: "/" },
-  { id: 2, title: "درباره ما", link: "/AboutUs" },
-  { id: 3, title: "ارتباط با ما", link: "/ContactUs" },
-];
-
-function NavItem({ items = defaultItems, className, ...props }) {
+function NavItem({ items, className, ...props }) {
   return (
     <ul>
-      {items.map(({ id, title, link }) => (
-        <li key={id}>
+      {items.map(({ id, title, link , func}) => (
+        <li key={id} onClick={() => func() }>
           <Link to={link}> {title} </Link>
         </li>
       ))}

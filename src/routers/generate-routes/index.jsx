@@ -6,35 +6,24 @@ import ProtectedRoute from "../ProtectedRoute";
 function generateFlattenRoutes(routes) {
   if (!routes) return [];
   return flattenDeep(
-    routes.map(({ routes: subRoutes, ...rest }) => [
-      rest,
-      generateFlattenRoutes(subRoutes),
-    ])
+    routes.map(({ routes: subRoutes, ...rest }) => [rest, generateFlattenRoutes(subRoutes)])
   );
 }
 
 export const renderRoutes = (mainRoutes) => {
-  const Routes = ({ isAuthorized = true }) => {
+  const Routes = ({ isAuthorized }) => {
     const layouts = mainRoutes.map(({ layout: Layout, routes }, index) => {
       const subRoutes = generateFlattenRoutes(routes);
 
       return (
         <Route key={index} element={<Layout />}>
-          {subRoutes.map((subRoute) => {
+          {subRoutes.map((subRoute, index) => {
             return (
               <Route
-                element={
-                  <ProtectedRoute
-                    isPublic={subRoute.isPublic}
-                    isAuthorized={isAuthorized}
-                  />
-                }
+                key={index}
+                element={<ProtectedRoute isPublic={subRoute.isPublic} isAuthorized={isAuthorized} />}
               >
-                <Route
-                  key={subRoute.path}
-                  element={subRoute.component()}
-                  path={subRoute.path}
-                />
+                <Route key={subRoute.path} element={subRoute.component()} path={subRoute.path} />
               </Route>
             );
           })}

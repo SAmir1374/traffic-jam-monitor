@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import opacity from "react-element-popper/animations/opacity";
 import persian from "react-date-object/calendars/persian";
@@ -14,6 +14,21 @@ function MyDatePicker() {
     new DateObject({ calendar: persian }).subtract(1, "months"),
     new DateObject({ calendar: persian }),
   ]);
+
+  useEffect(() => {
+    // const mydata =  new Date(new DateObject(values[1]).convert().toUnix() * 1000).toLocaleDateString()
+    const mydata =  new Date(new DateObject(values[1]).convert().toUnix() * 1000)
+    console.log("value in date is => ", mydata);
+    
+    var day = mydata.getDate();
+    var month = mydata.getMonth() + 1; // Months are zero-based, so add 1
+    var year = mydata.getFullYear();
+
+    var formattedDate = `${day}/${month}/${year}`;
+
+    console.log(formattedDate);
+
+  }, [values]);
 
   return (
     <DatePicker

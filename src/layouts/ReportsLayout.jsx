@@ -8,18 +8,13 @@ import BackGroundImg from "../components/ui/BackGroundImg";
 import chartImg from "../components/images/chart.jpg";
 import "../styles/layouts/ReportsLayout.css";
 
-const NavItems = [
-  { id: 1, title: "خانه", link: "/ImageWall" },
-  { id: 2, title: "گزارش ها", link: "/reports" },
-  { id: 3, title: "ارتباط با ما", link: "/ContactUs" },
-  { id: 4, title: "خروج", link: "/" },
-];
+
 
 function ReportsLayout() {
   return (
     <BackGroundImg src={chartImg}>
       <GlassCover className={"glassCoverReportsLayout"}>
-        <Navigation className={"navitationReportsLayout"} items={NavItems} />
+        <Navigation className={"navitationReportsLayout"} />
         <Container>
           <Outlet />
         </Container>

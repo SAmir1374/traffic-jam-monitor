@@ -7,16 +7,18 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { FaUserAlt } from "react-icons/fa";
 import { AuthLogin } from "../apis/Auth/Login";
 import store from "../redux/store";
-import { setAccessToken, updateAccessToken } from "../redux/slice/authSlice";
-import { json, useNavigate } from "react-router-dom";
+import { setAccessToken } from "../redux/slice/authSlice";
+import { useNavigate } from "react-router-dom";
+import Loader from "../components/ui/Loader";
+import toast from "react-hot-toast";
 import "../styles/pages/login.css";
-import { Monitoring } from "../apis/ImageWall/monitoring";
-import { setImgWall } from "../redux/slice/imgWall";
+import { useSelector } from "react-redux";
 
 function Login() {
+  const [myLoader, setMyLoader] = useState(false);
+  const { accessToken } = useSelector((store) => store.auth);
   const navigate = useNavigate();
-  const { mutate, isLoading, isSuccess, data } = AuthLogin();
-  const myMonitoringData = Monitoring();
+  const { mutate, isSuccess, status, isError, data } = AuthLogin();
 
   const SignupSchema = Yup.object().shape({
     username: Yup.string().email("نام کاربری را به فرم ایمیل وارد کنید").required("این فلید اجباری است"),
@@ -34,6 +36,7 @@ function Login() {
     },
     validationSchema: SignupSchema,
     onSubmit: (values, { resetForm }) => {
+      setMyLoader(true);
       localStorage.setItem("remeber_Me", JSON.stringify(values));
       mutate({ Email: values.username, Password: values.password, RememberMe: true });
       setTimeout(() => {
@@ -43,40 +46,49 @@ function Login() {
   });
 
   useEffect(() => {
-    if (isSuccess) {
-      store.dispatch(setAccessToken(data?.token));
-      store.dispatch(setImgWall(myMonitoringData.data));
+    status === "error" && setMyLoader(false);
+    isError && !isSuccess && toast.error("Error");
+    if (accessToken) {
       navigate("/ImageWall");
     }
-  }, [formik.values, isSuccess]);
+    if (isSuccess) {
+      toast.success("Login successfully");
+      setMyLoader(false);
+      store.dispatch(setAccessToken(data?.token));
+      navigate("/ImageWall");
+    }
+  }, [formik.values, isSuccess, status]);
 
   return (
-    <form onSubmit={formik.handleSubmit} className="form-group">
-      <InputGroup
-        icon={<RiLockPasswordLine />}
-        inputName={"username"}
-        label={"Username"}
-        inputClassName={"glassInput"}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        inputValue={formik.values.username}
-        helperText={formik.errors.username ? formik.errors.username : ""}
-      />
-      <InputGroup
-        icon={<FaUserAlt />}
-        inputName={"password"}
-        inputType={"password"}
-        label={"Password"}
-        inputClassName={"glassInput"}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        inputValue={formik.values.password}
-        helperText={formik.errors.password ? formik.errors.password : ""}
-      />
-      <Button disabled={!(!!formik.values.username & !!formik.values.password)} type={"submit"}>
-        Login
-      </Button>
-    </form>
+    <div className="LoginContainer">
+      {myLoader && <Loader className={"loadingClass"} />}
+      <form onSubmit={formik.handleSubmit} className="form-group">
+        <InputGroup
+          icon={<RiLockPasswordLine />}
+          inputName={"username"}
+          label={"Username"}
+          inputClassName={"glassInput"}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          inputValue={formik.values.username}
+          helperText={formik.errors.username ? formik.errors.username : ""}
+        />
+        <InputGroup
+          icon={<FaUserAlt />}
+          inputName={"password"}
+          inputType={"password"}
+          label={"Password"}
+          inputClassName={"glassInput"}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          inputValue={formik.values.password}
+          helperText={formik.errors.password ? formik.errors.password : ""}
+        />
+        <Button disabled={!(!!formik.values.username & !!formik.values.password)} type={"submit"}>
+          Login
+        </Button>
+      </form>
+    </div>
   );
 }
 

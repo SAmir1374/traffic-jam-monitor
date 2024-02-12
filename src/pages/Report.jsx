@@ -25,7 +25,7 @@ function Report(props) {
     const pathSeparate = pathname.split("/");
     const id = pathSeparate[2];
     const boardType = pathSeparate[3];
-    console.log("id  ---> ", id);
+    // console.log("id  ---> ", id);
   }, [pathname]);
 
   return (

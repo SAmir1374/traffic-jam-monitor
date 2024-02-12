@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router";
 import GlassCover from "../components/ui/GlassCover";
 import Container from "../components/ui/Container";

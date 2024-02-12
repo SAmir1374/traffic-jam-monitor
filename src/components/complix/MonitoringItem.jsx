@@ -4,10 +4,10 @@ import { MdSignalWifiStatusbarConnectedNoInternet } from "react-icons/md";
 import GlassCover from "../ui/GlassCover";
 import { TiBatteryCharge } from "react-icons/ti";
 import { GiWaterDrop } from "react-icons/gi";
-import "../../styles/ui/monitoringItem.css";
 import Sencor from "../ui/Sencor";
 import Descreption from "../ui/Descreption";
 import defualtmonitoring from "../images/defualtmonitoring.jpg";
+import "../../styles/ui/monitoringItem.css";
 
 function MonitoringItem({ className, src, temperature = "20", wet = "19.8", location, date, children }) {
   return (

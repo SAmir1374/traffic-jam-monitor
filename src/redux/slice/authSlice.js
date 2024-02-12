@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
 
 const initialState = {
-  accessToken: localStorage.getItem("accessToken") || null,
+  accessToken: Cookies.get("accessToken") || null,
 };
 
 const authSlice = createSlice({
@@ -10,16 +11,16 @@ const authSlice = createSlice({
   reducers: {
     setAccessToken: (state, action) => {
       state.accessToken = action.payload;
-      localStorage.setItem("accessToken", action.payload);
+      Cookies.set("accessToken", action.payload, { expires: 1 / 48 });
     },
     updateAccessToken: () => {
       state.accessToken = { ...state.user, ...action.payload };
       const accessTokenStringify = JSON.stringify(action.payload);
-      localStorage.setItem("accessToken", accessTokenStringify);
+      Cookies.set("accessToken", accessTokenStringify);
     },
     logout: (state, action) => {
       state.accessToken = null;
-      localStorage.removeItem("accessToken");
+      Cookies.remove("accessToken");
     },
   },
 });
