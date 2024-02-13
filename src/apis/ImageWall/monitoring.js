@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 
 export function Monitoring() {
   const auth = useSelector((store) => store.auth);
+
+  
   async function asyncMonitoring() {
     const { data } = await request.post("/MonitorDevice");
     return data;
