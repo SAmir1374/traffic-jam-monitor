@@ -4,11 +4,16 @@ import opacity from "react-element-popper/animations/opacity";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import DatePanel from "react-multi-date-picker/plugins/date_panel";
+import { useDispatch, useSelector } from "react-redux";
 import "../../styles/ui/datePicker.css";
 import "react-multi-date-picker/styles/layouts/mobile.css";
+import { setRangeDate } from "../../redux/slice/reportsSlice";
 
 function MyDatePicker() {
   const date = new DateObject({ calendar: persian, locale: persian_fa });
+
+  const Reports = useSelector((state) => state.reportsSlice);
+  const dispatch = useDispatch();
 
   const [values, setValues] = useState([
     new DateObject({ calendar: persian }).subtract(1, "months"),
@@ -16,18 +21,8 @@ function MyDatePicker() {
   ]);
 
   useEffect(() => {
-    // const mydata =  new Date(new DateObject(values[1]).convert().toUnix() * 1000).toLocaleDateString()
-    const mydata =  new Date(new DateObject(values[1]).convert().toUnix() * 1000)
-    console.log("value in date is => ", mydata);
-    
-    var day = mydata.getDate();
-    var month = mydata.getMonth() + 1; // Months are zero-based, so add 1
-    var year = mydata.getFullYear();
-
-    var formattedDate = `${day}/${month}/${year}`;
-
-    console.log(formattedDate);
-
+    console.log("store ", Reports);
+    dispatch(setRangeDate(values));
   }, [values]);
 
   return (

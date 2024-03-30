@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import MyBox from "../components/ui/Box";
 import Divider from "@mui/material/Divider";
@@ -7,9 +7,11 @@ import LineChart from "../components/complix/LineChart";
 import BarChart from "../components/complix/BarChart";
 import Table from "../components/complix/Table";
 import DatePicker from "../components/ui/DatePicker";
+import { ReportForDateRange } from "../apis/Reports/ReportForDateRange";
 import "../styles/pages/report.css";
+import { useSelector } from "react-redux";
 
-const data = [
+const mydata = [
   { name: "Page A", uv: 4000, pv: 2400 },
   { name: "Page B", uv: 3000, pv: 1398 },
   { name: "Page C", uv: 2000, pv: 9800 },
@@ -18,6 +20,13 @@ const data = [
 ];
 
 function Reports() {
+  const reports = useSelector((state) => state.reportsSlice);
+  const { mutate, isSuccess, status, data } = ReportForDateRange();
+
+  useEffect(() => {
+    console.log("reports => ", reports);
+  }, [reports]);
+
   return (
     <div>
       <Grid container spacing={2} className="myGrid">
@@ -44,12 +53,12 @@ function Reports() {
         </Grid>
         <Grid item xs={12} md={6}>
           <ChartBox className="mychart">
-            <LineChart className={"test"} data={data} />
+            <LineChart className={"test"} data={mydata} />
           </ChartBox>
         </Grid>
         <Grid item xs={12} md={6}>
           <ChartBox className="mychart">
-            <BarChart className={"test"} data={data} />
+            <BarChart className={"test"} data={mydata} />
           </ChartBox>
         </Grid>
         <Grid item xs={12} sx={12} md={12}>
