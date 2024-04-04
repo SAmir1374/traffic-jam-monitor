@@ -24,7 +24,8 @@ function Reports() {
   const { mutate, isSuccess, status, data } = ReportForDateRange();
 
   useEffect(() => {
-    console.log("reports => ", reports);
+    mutate({from : reports?.rangeDate[0] , to : reports?.rangeDate[1]})
+    console.log(`data is =>` , data);
   }, [reports]);
 
   return (

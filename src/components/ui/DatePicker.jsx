@@ -21,7 +21,6 @@ function MyDatePicker() {
   ]);
 
   useEffect(() => {
-    console.log("store ", Reports);
     dispatch(setRangeDate(values));
   }, [values]);
 

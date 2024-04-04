@@ -13,7 +13,7 @@ const authSlice = createSlice({
       state.accessToken = action.payload;
       Cookies.set("accessToken", action.payload, { expires: 1 / 48 });
     },
-    updateAccessToken: () => {
+    updateAccessToken: (state , action) => {
       state.accessToken = { ...state.user, ...action.payload };
       const accessTokenStringify = JSON.stringify(action.payload);
       Cookies.set("accessToken", accessTokenStringify);
