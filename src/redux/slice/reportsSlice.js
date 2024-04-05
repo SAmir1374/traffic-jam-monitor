@@ -4,6 +4,7 @@ import { DateObject } from "react-multi-date-picker";
 const initialState = {
   specialDate: "",
   rangeDate: [],
+  rangeDateData: [],
   loading: false,
 };
 
@@ -22,12 +23,15 @@ const reportsSlice = createSlice({
     setRangeDate: (state, action) => {
       state.rangeDate = [makeDateFormate(action.payload[0]), makeDateFormate(action.payload[1])];
     },
+    setRangeDateData: (state , action) => {
+      state.rangeDateData = action.payload?.dayliDeviceReports?.map(el => ({...el , countPer100 : el.count / action.payload?.mustSentForEveryDevice * 100}))
+    },
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
   },
 });
 
-export const { setSpecialDate, setRangeDate, setLoading } = reportsSlice.actions;
+export const { setSpecialDate, setRangeDate, setRangeDateData , setLoading } = reportsSlice.actions;
 
 export default reportsSlice.reducer;

@@ -8,8 +8,10 @@ import BarChart from "../components/complix/BarChart";
 import Table from "../components/complix/Table";
 import DatePicker from "../components/ui/DatePicker";
 import { ReportForDateRange } from "../apis/Reports/ReportForDateRange";
+import { setRangeDateData } from '../redux/slice/reportsSlice'
 import "../styles/pages/report.css";
 import { useSelector } from "react-redux";
+import store from "../redux/store";
 
 const mydata = [
   { name: "Page A", uv: 4000, pv: 2400 },
@@ -25,7 +27,11 @@ function Reports() {
 
   useEffect(() => {
     mutate({from : reports?.rangeDate[0] , to : reports?.rangeDate[1]})
-    console.log(`data is =>` , data);
+    if(isSuccess){
+      store.dispatch(setRangeDateData(data))
+    }
+    console.log('reports ==> ', reports);
+    
   }, [reports]);
 
   return (

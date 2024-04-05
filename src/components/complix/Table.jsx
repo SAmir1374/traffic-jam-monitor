@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -9,10 +9,11 @@ import Paper from "@mui/material/Paper";
 import MuiRTL from "../ui/MuiRTL";
 import MuiTheme from "../ui/MuiTheme";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import "../../styles/complix/table.css";
 
 function createData(id, name, calories) {
-  return {id , name, calories };
+  return { id, name, calories };
 }
 
 const rows = [
@@ -24,12 +25,22 @@ const rows = [
 ];
 
 function MyTable() {
+  const report = useSelector((state) => state.reportsSlice);
+
+  useEffect(() => {
+    
+  }, []);
+
   return (
     <MuiRTL>
       <MuiTheme>
         <TableContainer
           component={Paper}
-          sx={{ background: "rgba(0, 0, 0, 0.6)", backdropFilter: "blur(1px)", borderRadius: "15px" }}
+          sx={{
+            background: "rgba(0, 0, 0, 0.6)",
+            backdropFilter: "blur(1px)",
+            borderRadius: "15px",
+          }}
         >
           <Table sx={{ minWidth: 400 }} aria-label="simple table">
             <TableHead>
@@ -40,7 +51,10 @@ function MyTable() {
             </TableHead>
             <TableBody>
               {rows.map((row) => (
-                <TableRow key={row.id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                <TableRow
+                  key={row.id}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
                   <TableCell component="th" scope="col">
                     <Link className="myLink" to={`/reports/${row.id}`}>
                       {row.name}

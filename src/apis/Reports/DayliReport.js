@@ -6,7 +6,7 @@ export function DailyReport() {
   const auth = useSelector((store) => store.auth);
 
   async function asyncDailyReport() {
-    const { data } = await request("/ReportApi/DayliReport");
+    const { data } = await request.get("/ReportApi/DayliReport");
     return data;
   }
 
