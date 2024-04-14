@@ -7,69 +7,89 @@ import LineChart from "../components/complix/LineChart";
 import BarChart from "../components/complix/BarChart";
 import Table from "../components/complix/Table";
 import DatePicker from "../components/ui/DatePicker";
-import { ReportForDateRange } from "../apis/Reports/ReportForDateRange";
-import { setRangeDateData } from '../redux/slice/reportsSlice'
 import "../styles/pages/report.css";
 import { useSelector } from "react-redux";
-import store from "../redux/store";
 
-const mydata = [
-  { name: "Page A", uv: 4000, pv: 2400 },
-  { name: "Page B", uv: 3000, pv: 1398 },
-  { name: "Page C", uv: 2000, pv: 9800 },
-  { name: "Page D", uv: 2780, pv: 3908 },
-  { name: "Page E", uv: 1890, pv: 4800 },
-];
+import { ReportForDateRange } from "../apis/Reports/ReportForDateRange";
+import { setRangeDateData, setMaxMinData } from "../redux/slice/reportsSlice";
+import store from "../redux/store";
 
 function Reports() {
   const reports = useSelector((state) => state.reportsSlice);
+
+  const auth = useSelector((state) => state.auth);
   const { mutate, isSuccess, status, data } = ReportForDateRange();
 
   useEffect(() => {
-    mutate({from : reports?.rangeDate[0] , to : reports?.rangeDate[1]})
-    if(isSuccess){
-      store.dispatch(setRangeDateData(data))
+    if (auth.accessToken && reports.rangeDate.length) {
+      mutate({ from: reports?.rangeDate[0], to: reports?.rangeDate[1] });
     }
-    console.log('reports ==> ', reports);
-    
-  }, [reports]);
+
+  }, [auth.accessToken, reports.rangeDate, mutate]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      store.dispatch(setRangeDateData(data));
+      store.dispatch(setMaxMinData());
+    }
+  }, [isSuccess]);
 
   return (
     <div>
       <Grid container spacing={2} className="myGrid">
         <Grid item xs={12} md={12} className="myGridTitle">
           <div className="title">
-            <Divider orientation="vertical" variant="middle" flexItem className="divider" />
-            <h3>خلاصه آمار یک ماه اخیر</h3>
+            <Divider
+              orientation="vertical"
+              variant="middle"
+              flexItem
+              className="divider"
+            />
+            <h3>خلاصه آمار</h3>
           </div>
           <div className="title">
             <DatePicker />
           </div>
         </Grid>
         <Grid item xs={6} md={6} lg={3}>
-          <MyBox title="بیشترین درصد کارایی" colorNumber="green" number="63%" />
+          <MyBox
+            title="بیشترین درصد کارایی"
+            colorNumber="green"
+            number={`${reports.maxMinAvg?.max?.countPer100}%`}
+          />
         </Grid>
         <Grid item xs={6} md={6} lg={3}>
-          <MyBox title="کمترین درصد کارایی" colorNumber="red" number="43%" />
+          <MyBox
+            title="کمترین درصد کارایی"
+            colorNumber="red"
+            number={`${reports.maxMinAvg?.min?.countPer100}%`}
+          />
         </Grid>
         <Grid item xs={12} md={6} lg={3}>
-          <MyBox title="میانگین کارایی همه دستگاه ها" number="52.5%" />
+          <MyBox
+            title="میانگین کارایی همه دستگاه ها"
+            number={`${(
+              (+reports.maxMinAvg?.max?.countPer100 +
+                +reports.maxMinAvg?.min?.countPer100) /
+              2
+            ).toFixed(2)}%`}
+          />
         </Grid>
         <Grid item xs={12} md={6} lg={3}>
           <MyBox title="نرخ کارایی مطلوب" number="90%" />
         </Grid>
         <Grid item xs={12} md={6}>
           <ChartBox className="mychart">
-            <LineChart className={"test"} data={mydata} />
+            <LineChart className={"test"} data={reports.rangeDateData} />
           </ChartBox>
         </Grid>
         <Grid item xs={12} md={6}>
           <ChartBox className="mychart">
-            <BarChart className={"test"} data={mydata} />
+            <BarChart className={"test"} data={reports.rangeDateData} />
           </ChartBox>
         </Grid>
         <Grid item xs={12} sx={12} md={12}>
-          <Table />
+          <Table data={reports.rangeDateData} />
         </Grid>
       </Grid>
     </div>

@@ -5,6 +5,7 @@ const initialState = {
   specialDate: "",
   rangeDate: [],
   rangeDateData: [],
+  maxMinAvg: {},
   loading: false,
 };
 
@@ -21,10 +22,23 @@ const reportsSlice = createSlice({
       state.specialDate = action.payload;
     },
     setRangeDate: (state, action) => {
-      state.rangeDate = [makeDateFormate(action.payload[0]), makeDateFormate(action.payload[1])];
+      state.rangeDate = [
+        makeDateFormate(action.payload[0]),
+        makeDateFormate(action.payload[1]),
+      ];
     },
-    setRangeDateData: (state , action) => {
-      state.rangeDateData = action.payload?.dayliDeviceReports?.map(el => ({...el , countPer100 : el.count / action.payload?.mustSentForEveryDevice * 100}))
+    setRangeDateData: (state, action) => {
+      state.rangeDateData = action.payload?.dayliDeviceReports?.map((el) => ({...el, countPer100: ((el.count / action.payload?.mustSentForEveryDevice) * 100).toFixed(2)}));
+    },
+    setMaxMinData: (state, action) => {
+      state.maxMinAvg = {
+        max: state.rangeDateData?.reduce((prev, curr) =>
+          prev.countPer100 > curr.countPer100 ? prev : curr
+        ),
+        min: state.rangeDateData?.reduce((prev, curr) =>
+          prev.countPer100 < curr.countPer100 ? prev : curr
+        ),
+      };
     },
     setLoading: (state, action) => {
       state.loading = action.payload;
@@ -32,6 +46,12 @@ const reportsSlice = createSlice({
   },
 });
 
-export const { setSpecialDate, setRangeDate, setRangeDateData , setLoading } = reportsSlice.actions;
+export const {
+  setSpecialDate,
+  setRangeDate,
+  setRangeDateData,
+  setMaxMinData,
+  setLoading,
+} = reportsSlice.actions;
 
 export default reportsSlice.reducer;

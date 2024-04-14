@@ -12,24 +12,10 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "../../styles/complix/table.css";
 
-function createData(id, name, calories) {
-  return { id, name, calories };
-}
-
-const rows = [
-  createData(1, "Frozen yoghurt", 159),
-  createData(2, "Ice cream sandwich", 237),
-  createData(3, "Eclair", 262),
-  createData(4, "Cupcake", 305),
-  createData(5, "Gingerbread", 356),
-];
-
-function MyTable() {
+function MyTable(data) {
   const report = useSelector((state) => state.reportsSlice);
 
-  useEffect(() => {
-    
-  }, []);
+  useEffect(() => {}, [data]);
 
   return (
     <MuiRTL>
@@ -46,23 +32,29 @@ function MyTable() {
             <TableHead>
               <TableRow>
                 <TableCell>موقعیت</TableCell>
+                <TableCell>شماره دستگاه</TableCell>
                 <TableCell>عملکرد</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
+              {data.data?.map((row) => (
                 <TableRow
-                  key={row.id}
+                  key={row.cameraId}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="col">
-                    <Link className="myLink" to={`/reports/${row.id}`}>
-                      {row.name}
+                    <Link className="myLink" to={`/reports/${row.cameraId}`}>
+                      {row.location}
                     </Link>
                   </TableCell>
                   <TableCell>
-                    <Link className="myLink" to={`/reports/${row.id}`}>
-                      {row.calories}
+                    <Link className="myLink" to={`/reports/${row.cameraId}`}>
+                      {row.deviceName}
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    <Link className="myLink" to={`/reports/${row.cameraId}`}>
+                      {row.countPer100}
                     </Link>
                   </TableCell>
                 </TableRow>
