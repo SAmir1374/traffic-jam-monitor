@@ -47,12 +47,12 @@ function Login() {
 
   useEffect(() => {
     status === "error" && setMyLoader(false);
-    isError && !isSuccess && toast.error("Error");
+    isError && !isSuccess && toast.error("خطا");
     if (accessToken) {
       navigate("/ImageWall");
     }
     if (isSuccess) {
-      toast.success("Login successfully");
+      toast.success("ورود با موفقیت");
       setMyLoader(false);
       store.dispatch(setAccessToken(data?.token));
       navigate("/ImageWall");
@@ -61,12 +61,12 @@ function Login() {
 
   return (
     <div className="LoginContainer">
-      {myLoader && <Loader className={"loadingClass"} />}
+      {myLoader && <Loader label="کمی صبر کنید" className={"loadingClass"} />}
       <form onSubmit={formik.handleSubmit} className="form-group">
         <InputGroup
           icon={<RiLockPasswordLine />}
           inputName={"username"}
-          label={"Username"}
+          label={"نام کاربری"}
           inputClassName={"glassInput"}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -77,7 +77,7 @@ function Login() {
           icon={<FaUserAlt />}
           inputName={"password"}
           inputType={"password"}
-          label={"Password"}
+          label={"رمز عبور"}
           inputClassName={"glassInput"}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}

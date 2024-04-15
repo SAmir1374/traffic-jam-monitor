@@ -9,16 +9,16 @@ import Table from "../components/complix/Table";
 import DatePicker from "../components/ui/DatePicker";
 import "../styles/pages/report.css";
 import { useSelector } from "react-redux";
-
 import { ReportForDateRange } from "../apis/Reports/ReportForDateRange";
 import { setRangeDateData, setMaxMinData } from "../redux/slice/reportsSlice";
 import store from "../redux/store";
+import Loader from "../components/ui/Loader";
 
 function Reports() {
   const reports = useSelector((state) => state.reportsSlice);
 
   const auth = useSelector((state) => state.auth);
-  const { mutate, isSuccess, status, data } = ReportForDateRange();
+  const { mutate, isSuccess, isLoading , status, data } = ReportForDateRange();
 
   useEffect(() => {
     if (auth.accessToken && reports.rangeDate.length) {
@@ -32,10 +32,11 @@ function Reports() {
       store.dispatch(setRangeDateData(data));
       store.dispatch(setMaxMinData());
     }
-  }, [isSuccess]);
+  }, [isSuccess , reports.loading]);
 
   return (
     <div>
+      { reports.loading && <Loader label="کمی صبر کنید" className={'reportsLoader'}/> }
       <Grid container spacing={2} className="myGrid">
         <Grid item xs={12} md={12} className="myGridTitle">
           <div className="title">

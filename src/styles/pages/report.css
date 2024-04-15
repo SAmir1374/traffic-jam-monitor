@@ -33,3 +33,13 @@
 .yAxis {
   padding: 50px !important;
 }
+
+.reportsLoader{
+  position: absolute;
+  background-color: rgba(69, 69, 69, 0.5);
+  border-radius: 12px;
+  top: 30%;
+  z-index: 999;
+  width: 90%;
+  height: 70%;
+}
