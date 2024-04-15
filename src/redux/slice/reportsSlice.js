@@ -3,6 +3,7 @@ import { DateObject } from "react-multi-date-picker";
 
 const initialState = {
   specialDate: "",
+  showMissTime: [],
   rangeDate: [],
   rangeDateData: [],
   maxMinAvg: {},
@@ -13,6 +14,7 @@ const makeDateFormate = (date) => {
   const mydata = new Date(new DateObject(date).convert().toUnix() * 1000);
   return `${mydata.getMonth() + 1}/${mydata.getDate()}/${mydata.getFullYear()}`;
 };
+
 
 const reportsSlice = createSlice({
   name: "reports",
@@ -40,6 +42,9 @@ const reportsSlice = createSlice({
         ),
       };
     },
+    setShowMissTime : (state , action) => {
+      state.showMissTime = action.payload
+    }, 
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
@@ -51,6 +56,8 @@ export const {
   setRangeDate,
   setRangeDateData,
   setMaxMinData,
+  setForDate,
+  setShowMissTime,
   setLoading,
 } = reportsSlice.actions;
 
