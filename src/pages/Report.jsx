@@ -14,15 +14,8 @@ import store from "../redux/store";
 import { ShowMissTime } from "../apis/Reports/ShowMissTime";
 import { DateObject } from "react-multi-date-picker";
 import { setForDate , setShowMissTime } from '../redux/slice/reportsSlice'
+import Loader from "../components/ui/Loader";
 import "../styles/pages/report.css";
-
-const myData = [
-  { name: "Page A", uv: 4000, pv: 2400 },
-  { name: "Page B", uv: 3000, pv: 1398 },
-  { name: "Page C", uv: 2000, pv: 9800 },
-  { name: "Page D", uv: 2780, pv: 3908 },
-  { name: "Page E", uv: 1890, pv: 4800 },
-];
 
 function Report() {
   
@@ -50,6 +43,7 @@ function Report() {
 
   return (
     <div>
+      { report.loading && <Loader label="کمی صبر کنید" className={'reportsLoader'}/> }
       <Grid container spacing={2} className="myGrid">
         <Grid item xs={12} md={12} className="myGridTitle">
           <Grid>
@@ -88,7 +82,7 @@ function Report() {
         </Grid>
         <Grid item xs={12} md={12}>
           <ChartBox className="mychart">
-            <AreaChart className={"test"} data={myData} />
+            <AreaChart className={"test"} data={report.rangeDateData} />
           </ChartBox>
         </Grid>
       </Grid>
