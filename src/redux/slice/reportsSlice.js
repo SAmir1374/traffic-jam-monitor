@@ -1,3 +1,9 @@
+
+
+
+
+
+
 import { createSlice } from "@reduxjs/toolkit";
 import { DateObject } from "react-multi-date-picker";
 
@@ -10,11 +16,6 @@ const initialState = {
   loading: false,
 };
 
-const makeDateFormate = (date) => {
-  const mydata = new Date(new DateObject(date).convert().toUnix() * 1000);
-  return `${mydata.getMonth() + 1}/${mydata.getDate()}/${mydata.getFullYear()}`;
-};
-
 
 const reportsSlice = createSlice({
   name: "reports",
@@ -24,13 +25,16 @@ const reportsSlice = createSlice({
       state.specialDate = action.payload;
     },
     setRangeDate: (state, action) => {
-      state.rangeDate = [
-        makeDateFormate(action.payload[0]),
-        makeDateFormate(action.payload[1]),
-      ];
+      state.rangeDate = [action.payload[0], action.payload[1]];
     },
     setRangeDateData: (state, action) => {
-      state.rangeDateData = action.payload?.dayliDeviceReports?.map((el) => ({...el, countPer100: ((el.count / action.payload?.mustSentForEveryDevice) * 100).toFixed(2)}));
+      state.rangeDateData = action.payload?.dayliDeviceReports?.map((el) => ({
+        ...el,
+        countPer100: (
+          (el.count / action.payload?.mustSentForEveryDevice) *
+          100
+        ).toFixed(2),
+      }));
     },
     setMaxMinData: (state, action) => {
       state.maxMinAvg = {
@@ -42,9 +46,9 @@ const reportsSlice = createSlice({
         ),
       };
     },
-    setShowMissTime : (state , action) => {
-      state.showMissTime = action.payload
-    }, 
+    setShowMissTime: (state, action) => {
+      state.showMissTime = action.payload;
+    },
     setLoading: (state, action) => {
       state.loading = action.payload;
     },

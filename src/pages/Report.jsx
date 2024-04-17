@@ -54,7 +54,7 @@ function Report() {
           </Grid>
           <Grid>
             <div className="title">
-              <DatePicker />
+              <DatePicker defaultDate={report.rangeDate} />
             </div>
           </Grid>
         </Grid>

@@ -8,21 +8,36 @@ import { useDispatch, useSelector } from "react-redux";
 import { ReportForDateRange } from "../../apis/Reports/ReportForDateRange";
 import "../../styles/ui/datePicker.css";
 import "react-multi-date-picker/styles/layouts/mobile.css";
-import {setRangeDate} from "../../redux/slice/reportsSlice";
+import { setRangeDate } from "../../redux/slice/reportsSlice";
 
-function MyDatePicker() {
-  const date = new DateObject({ calendar: persian, locale: persian_fa });
+const makeFormateToObject = (date) => [
+  new DateObject(new Date(date[0])),
+  new DateObject(new Date(date[1])),
+];
+const makeDateFormate = (date) => {
+  const mydata = new Date(new DateObject(date).convert().toUnix() * 1000);
+  return `${mydata.getMonth() + 1}/${mydata.getDate()}/${mydata.getFullYear()}`;
+};
 
-  const Reports = useSelector((state) => state.reportsSlice);
+function MyDatePicker({
+  pickerDate = [
+    makeDateFormate(new DateObject({ calendar: persian }).subtract(1, "months")),
+    makeDateFormate(new DateObject({ calendar: persian })),
+  ],
+  defaultDate = [],
+}) {
+
   const dispatch = useDispatch();
-
-  const [values, setValues] = useState([
-    new DateObject({ calendar: persian }).subtract(1, "months"),
-    new DateObject({ calendar: persian }),
-  ]);
+  const [values, setValues] = useState(defaultDate.length === 0 ? pickerDate : defaultDate);
 
   useEffect(() => {
-    dispatch(setRangeDate(values));
+    if(typeof values[0] === 'object'){
+      const helper = [makeDateFormate(values[0]),makeDateFormate(values[1])]
+      dispatch(setRangeDate(helper));
+    }else{
+      dispatch(setRangeDate(values));
+    }
+
   }, [values]);
 
   return (
@@ -40,7 +55,7 @@ function MyDatePicker() {
       }}
       animations={[opacity({ from: 0, to: 1, duration: 1000 })]}
       render={<CustomRangeInput />}
-      value={values}
+      value={makeFormateToObject(values)}
       onChange={setValues}
       dateSeparator="  تا  "
       range

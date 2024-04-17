@@ -49,7 +49,7 @@ function Reports() {
             <h3>خلاصه آمار</h3>
           </div>
           <div className="title">
-            <DatePicker />
+            <DatePicker defaultDate={reports.rangeDate} />
           </div>
         </Grid>
         <Grid item xs={6} md={6} lg={3}>
@@ -89,7 +89,7 @@ function Reports() {
             <BarChart className={"test"} data={reports.rangeDateData} />
           </ChartBox>
         </Grid>
-        <Grid item xs={12} sx={12} md={12}>
+        <Grid item xs={12} md={12}>
           <Table data={reports.rangeDateData} />
         </Grid>
       </Grid>

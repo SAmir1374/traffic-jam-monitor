@@ -19,7 +19,7 @@ function MonitoringPage() {
   return (
     <Grid container justifyContent={"center"}>
       {imgWall?.length === 0 || imgWall === undefined
-        ? countSkeleton.map((e) => <MySkeleton />)
+        ? countSkeleton.map((e) => <MySkeleton key={e} />)
         : imgWall?.map(({ id, imageUrl, temperature, humidity, imageName, imageDateTime }, index) => (
             <ModalButton
               key={id}
