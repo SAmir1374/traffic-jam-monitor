@@ -39,7 +39,7 @@ function Reports() {
       { reports.loading && <Loader label="کمی صبر کنید" className={'reportsLoader'}/> }
       <Grid container spacing={2} className="myGrid">
         <Grid item xs={12} md={12} className="myGridTitle">
-          <div className="title">
+          <div className="title summryTitle">
             <Divider
               orientation="vertical"
               variant="middle"

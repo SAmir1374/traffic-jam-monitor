@@ -39,3 +39,9 @@
 .hidden {
   transform: translateY(-100%);
 }
+
+@media only screen and (max-width: 600px) {
+  .nav .logo {
+    display: none;
+  }
+}

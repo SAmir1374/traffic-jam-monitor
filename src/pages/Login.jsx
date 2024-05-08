@@ -39,6 +39,7 @@ function Login() {
       setMyLoader(true);
       localStorage.setItem("remeber_Me", JSON.stringify(values));
       mutate({ Email: values.username, Password: values.password, RememberMe: true });
+      isError && !isSuccess && toast.error("خطا");
       setTimeout(() => {
         resetForm();
       }, 1000 * 2);
@@ -46,8 +47,9 @@ function Login() {
   });
 
   useEffect(() => {
+
     status === "error" && setMyLoader(false);
-    isError && !isSuccess && toast.error("خطا");
+    // isError && !isSuccess && toast.error("خطا");
     if (accessToken) {
       navigate("/ImageWall");
     }

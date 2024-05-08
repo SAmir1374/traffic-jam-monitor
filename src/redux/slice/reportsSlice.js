@@ -1,9 +1,3 @@
-
-
-
-
-
-
 import { createSlice } from "@reduxjs/toolkit";
 import { DateObject } from "react-multi-date-picker";
 
